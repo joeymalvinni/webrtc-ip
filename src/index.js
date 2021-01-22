@@ -102,7 +102,7 @@ function getServers(){
 
 function getConstraints(){
 	return {
-  	optional: [{RtpDataChannels: true}]
+  	    optional: [{RtpDataChannels: true}]
 	};
 }
 
@@ -119,4 +119,20 @@ function validateIp(ipaddress) {
 
 function removeDuplicates(array){
   return [...new Set(array)];
+}
+
+function getIpTypes(callback){
+    getIpArray(function(ips){
+        let finalIpArray = []
+        ips.forEach(ip=>{
+            if (ip.match(/^(192\.168\.|169\.254\.|10\.|172\.(1[6-9]|2\d|3[01]))/)) {
+                finalIpArray.push({ ip: ip, type: 'local'})
+            } else if (ip.match(/^[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7}$/)){
+                finalIpArray.push({ ip: ip, type: 'IPv6'})
+            } else {
+                finalIpArray.push({ ip: ip, type: 'public'})
+            }
+      })
+      callback(finalIpArray)
+    })       
 }

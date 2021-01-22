@@ -1,0 +1,27 @@
+{
+  "name": "webrtc-ip",
+  "version": "1.2.0",
+  "description": "💻 Simplified IP client using WebRTC.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joeymalvinni/webrtc-ip.git"
+  },
+  "keywords": [
+    "webrtc",
+    "ipv4",
+    "ip-addresses",
+    "ip-request",
+    "webrtc-ip",
+    "webrtc-ip-addresses"
+  ],
+  "author": "Joey Malvinni",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joeymalvinni/webrtc-ip/issues"
+  },
+  "homepage": "https://github.com/joeymalvinni/webrtc-ip#readme"
+}
