@@ -3,9 +3,6 @@
   "version": "1.2.0",
   "description": "💻 Simplified IP client using WebRTC.",
   "main": "src/index.js",
-  "scripts": {
-    "test": "node src/index.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joeymalvinni/webrtc-ip.git"
@@ -23,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/joeymalvinni/webrtc-ip/issues"
   },
-  "homepage": "https://github.com/joeymalvinni/webrtc-ip#readme"
+  "homepage": "https://github.com/joeymalvinni/webrtc-ip#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  }
 }
