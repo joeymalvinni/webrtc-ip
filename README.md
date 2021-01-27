@@ -15,6 +15,7 @@ If you are using this in the browser, include the following script in the `<head
 You now have access to the `getIPs()` function.
 
 ---
+
 ## Usage
 
 ```js
