@@ -7,7 +7,7 @@ var port = process.env.PORT || 80;
 
 let path = require( 'path' );
 
-app.use('/dist', express.static(__dirname + '/dist'));
+app.use( '/dist', express.static( path.join( __dirname, 'dist' ) ) );
 app.use('/example', express.static(__dirname + '/example'));
 
 app.use(( req, res, next ) => {
