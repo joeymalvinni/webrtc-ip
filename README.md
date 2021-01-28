@@ -1,3 +1,9 @@
+# WARNING!
+This script is deprecated. Chrome has introduced various security measures to ensure that this will never happen. Read [this article](https://bloggeek.me/psa-mdns-and-local-ice-candidates-are-coming/) for more information.
+  
+    
+      
+      
 # **webrtc-ip**
 💻 Gets a users public and private IP addresses in the browser. 
 
