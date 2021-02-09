@@ -13,6 +13,8 @@ This software is for educational purposes only. This software should not be used
 If you are using this in the browser, include the following script in the `<head>` part of your HTML to access the `getIPs()` function:
 ```html
 <script src="https://cdn.jsdelivr.net/gh/joeymalvinni/webrtc-ip/dist/production.min.js"></script>
+<!---- OR use the dev bundle: ----->
+<script src="https://cdn.jsdelivr.net/gh/joeymalvinni/webrtc-ip/dist/bundle.dev.js"></script>
 ```
   
 You now have access to the `getIPs()` function.

@@ -4,9 +4,8 @@
 *   License: MIT
 */
 
-const { ip_regex_array, is_ipv6, is_ipv4, is_mdns, mdns } = require('./ip_validator');
+const { ip_regex_array, is_ipv6, is_ipv4 } = require('./ip_validator');
 const peer = require('./peer_conn');
-const ipify = require('./mdns.js')
 
 function getIPArray(timer){
     // Timing validation.

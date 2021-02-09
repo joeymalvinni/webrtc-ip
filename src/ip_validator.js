@@ -14,15 +14,6 @@ function is_ipv6(ip){
     return regex_v6.test(ip);
 };
 
-function is_mdns(ip){
-    return mdns.test(ip)
-}
-
-// mDNS regex to determine whether a string is an mDNS IP address.
-let mdns = /(^[a-zA-Z1-90]{8})-([a-zA-Z1-90]{4})-([a-zA-Z1-90]{4})-([a-zA-Z1-90]{4})-([a-zA-Z1-90]{12})\.local/;
-
-let mdns2 = /(^[a-zA-Z1-90]+)\.local/gm
-
 // IPv4 regex used to determine whether an IP is IPv4 or not.
 let regex_v4 = /((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])/;
 
@@ -40,8 +31,6 @@ let ip_regex_array = [regex_v6, regex_v4]
 module.exports = {
     is_ipv4,
     is_ipv6,
-    is_mdns,
     ip_regex_array,
-    mdns,
     simpleIPRegex
 }
