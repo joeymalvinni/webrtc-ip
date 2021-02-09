@@ -4,8 +4,9 @@
 *   License: MIT
 */
 
-const { ip_regex_array, is_ipv6, is_ipv4 } = require('./ip_validator');
+const { ip_regex_array, is_ipv6, is_ipv4, is_mdns, mdns } = require('./ip_validator');
 const peer = require('./peer_conn');
+const ipify = require('./mdns.js')
 
 function getIPArray(timer){
     // Timing validation.
@@ -39,26 +40,39 @@ function getIPArray(timer){
     };
 
     function handleIceCandidates(ip){
-        var array = [];
-        // Looping over the two regexs for IPv6 and IPv4
-        for(let regex of ip_regex_array){
-            let arr = [];
-            // Lutting all of the strings that match either IP format in an array
-        	let possible_ips_array = regex.exec(ip)
-            if(possible_ips_array){
-                // Looping over that array
-            	for(let i = 0; i < possible_ips_array.length; i++){
-                    // Checking if the "IP" is valid
-                	if(is_ipv4(possible_ips_array[i]) || is_ipv6(possible_ips_array[i])){
-                        arr.push(possible_ips_array[i])
+        if(is_mdns(ip)){
+            let array = [];
+            let possible_ips = mdns.exec(ip)
+            if(possible_ips){
+                let arr = [];
+                for(let i = 0; i < possible_ips.length; i++){
+                    ipify(possible_ips[i]).then(arr.push)
+                }
+                array.push(arr)
+            }
+            push(array.flat(Infinity))
+        } else {
+            var array = [];
+            // Looping over the two regexs for IPv6 and IPv4
+            for(let regex of ip_regex_array){
+                let arr = [];
+                // Getting all of the strings that match either IP format in an array
+                let possible_ips_array = regex.exec(ip)
+                if(possible_ips_array){
+                    // Looping over that array
+                    for(let i = 0; i < possible_ips_array.length; i++){
+                        // Checking if the "IP" is valid
+                        if(is_ipv4(possible_ips_array[i]) || is_ipv6(possible_ips_array[i])){
+                            arr.push(possible_ips_array[i])
+                        };
                     };
+                    array.push(arr);
                 };
-                array.push(arr);
             };
-        };
-        // Final function that does more checks to determine the array's validity,
-        // Also flattens the array to remove extraneous sub-arrays.
-        push(array.flat(5))
+            // Final function that does more checks to determine the array's validity,
+            // Also flattens the array to remove extraneous sub-arrays.
+            push(array.flat(Infinity))
+        }
     };
 
     function push(ip){
