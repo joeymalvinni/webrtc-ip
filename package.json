@@ -24,8 +24,8 @@
     "url": "https://github.com/joeymalvinni/webrtc-ip/issues"
   },
   "homepage": "https://github.com/joeymalvinni/webrtc-ip#readme",
-  "devDependencies": {
-    "express": "^4.17.1",
+  "dependencies": {
+    "express": "*",
     "path": "^0.12.7"
   }
 }
