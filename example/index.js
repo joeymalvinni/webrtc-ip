@@ -27,11 +27,9 @@ function matrix () {
 
 setInterval(matrix, 50);
 
-setTimeout(() => {
-  (async()=>{
-    let data = await getIPs()
-    for(let i = 0; i < data.length; i++){
-      document.getElementById('ips').innerHTML += `<li>${data[i]}</li>`
-    }
-  })()
-}, 500);
+window.onload = async function () {
+  let data = await getIPs()
+  for(let i = 0; i < data.length; i++){
+    document.getElementById('ips').innerHTML += `<li>${data[i]}</li>`
+  }
+}
