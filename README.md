@@ -58,7 +58,7 @@ getIPs().then(data=>{
 
 The author of webrtc-ips is [Joey Malvinni](https://github.com/joeymalvinni)
 
-[List of all contributors](https://github.com/joeymalvinni/webrtc-ips/graphs/contributors)
+[List of all contributors](https://github.com/joeymalvinni/webrtc-ip/graphs/contributors)
 
 ## License
 
