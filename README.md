@@ -3,19 +3,19 @@
     <br>
 </p>
 <p align="center">
-  <a href="https://travis-ci.com/joeymalvinni/random-usernames">
-    <img alt="Build Status" src="https://travis-ci.com/joeymalvinni/random-usernames.svg?branch=main">
+  <a href="https://travis-ci.com/joeymalvinni/webrtc-ip">
+    <img alt="Build Status" src="https://travis-ci.com/joeymalvinni/is-tor.svg?branch=main">
   </a>
   <a href="https://opensource.org/licenses/Apache-2.0">
 	<img alt="Apache 2.0 License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg">
   </a>
-  <a href="https://github.com/joeymalvinni/random-usernames/contributors/">
-	<img alt="Github contributors" src="https://img.shields.io/github/contributors/joeymalvinni/random-usernames.svg">
+  <a href="https://github.com/joeymalvinni/webrtc-ip/contributors/">
+	<img alt="Github contributors" src="https://img.shields.io/github/contributors/joeymalvinni/webrtc-ip.svg">
   </a>
-  <a href="https://snyk.io/test/github/joeymalvinni/random-usernames/">
-	<img alt="Snyk vulnerabilities" src="https://snyk.io/test/github/joeymalvinni/random-usernames/badge.svg?targetFile=package.json">
+  <a href="https://snyk.io/test/github/joeymalvinni/webrtc-ip/">
+	<img alt="Snyk vulnerabilities" src="https://snyk.io/test/github/joeymalvinni/webrtc-ip/badge.svg?targetFile=package.json">
   </a>
-  <a href="https://github.com/joeymalvinni/random-usernames/pulls">
+  <a href="https://github.com/joeymalvinni/webrtc-ip/pulls">
 	<img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
   </a>
 </p>
