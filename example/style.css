@@ -1,0 +1,29 @@
+h2{
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 50px;
+  }
+  body{
+    text-align: center;
+    color: white;
+    background-color: black;
+  }
+  h4{
+    font-size: 30px;
+  }
+  body, html, canvas {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  #text{
+    font-family: 'Ubuntu', sans-serif;
+    position: absolute;
+    top: 1vh;
+    width: 50%;
+    margin-left: 25%;
+    background-color: rgba(0, 0, 0, 0.623);
+    height: 95vh;
+  }
