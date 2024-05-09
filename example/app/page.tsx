@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { getIPs } from "@/components/webrtc-ip";
-import { parse_ice_candidate } from "@/components/candidate";
 
 export default function Home() {
   const [ips, setIps] = useState<string[]>([]);

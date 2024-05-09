@@ -9,9 +9,9 @@ export interface IceCandidate {
     relatedAddress?: string;
     relatedPort?: string;
     generation?: string;
-    ufrag?: string;
+    usernameFragment?: string;
     networkCost?: string;
-    tcptype?: string;
+    tcpType?: string;
 }
 
 export function parse_ice_candidate(candidate_string: string): IceCandidate {
@@ -38,11 +38,11 @@ export function parse_ice_candidate(candidate_string: string): IceCandidate {
         } else if (key === "generation") {
             candidate.generation = value;
         } else if (key === "ufrag") {
-            candidate.ufrag = value;
+            candidate.usernameFragment = value;
         } else if (key === "network-cost") {
             candidate.networkCost = value;
         } else if (key === "tcptype") {
-            candidate.tcptype = value;
+            candidate.tcpType = value;
         }
     }
 

@@ -22,33 +22,10 @@
 
 <br>
 
-This software is for educational purposes only. This software should not be used for illegal activity. The author is not responsible for its use.
 
+> [!WARNING]
+> This software is for educational purposes only. This software should not be used for illegal activity. The author is not responsible for its use.
 
-## Quick Start
-
-To use `webrtc-ips`, you need to include the `<script` tag in the `<head>` section of your HTML document.
-
-```html
-<script src="https://cdn.jsdelivr.net/gh/joeymalvinni/webrtc-ip/dist/production.min.js"></script>
-<!---- OR use the dev bundle: ----->
-<script src="https://cdn.jsdelivr.net/gh/joeymalvinni/webrtc-ip/dist/bundle.dev.js"></script>
-```
-
-Now you have access to the `getIPs()` function:
-
-```js
-// Using Promises:
-getIPs().then(data=>{
-  console.log(data.join('\n'))
-})
-
-// Using Async/Await:
-(async function(){
-  let data = await getIPs();
-  console.log(data.join('\n'));
-})();
-```
 
 ## Examples
 
