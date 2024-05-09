@@ -19,13 +19,9 @@
     "webrtc-ip-addresses"
   ],
   "author": "Joey Malvinni",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/joeymalvinni/webrtc-ip/issues"
   },
-  "homepage": "https://github.com/joeymalvinni/webrtc-ip#readme",
-  "dependencies": {
-    "express": "*",
-    "path": "^0.12.7"
-  }
+  "homepage": "https://github.com/joeymalvinni/webrtc-ip#readme"
 }
