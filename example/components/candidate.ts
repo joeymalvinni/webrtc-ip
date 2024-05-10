@@ -14,6 +14,11 @@ export interface IceCandidate {
     tcpType?: string;
 }
 
+export interface IPH {
+    ip: string,
+    type: string,
+}
+
 export function parse_ice_candidate(candidate_string: string): IceCandidate {
     const attr: string[] = candidate_string.split(" "); 
 
@@ -47,4 +52,13 @@ export function parse_ice_candidate(candidate_string: string): IceCandidate {
     }
 
     return candidate;
+}
+
+export function minimal_parse(ip: string): IPH {
+    const split = ip.split(" ");
+
+    return {
+        ip: split[4],
+        type: split[7],
+    }
 }
