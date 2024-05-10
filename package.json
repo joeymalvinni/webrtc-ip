@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/joeymalvinni/webrtc-ip/issues"
   },
-  "homepage": "https://github.com/joeymalvinni/webrtc-ip#readme"
+  "homepage": "https://github.com/joeymalvinni/webrtc-ip#readme",
+  "devDependencies": {
+    "puppeteer": "^22.8.0"
+  }
 }

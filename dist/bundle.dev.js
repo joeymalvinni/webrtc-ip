@@ -1,3 +1,5 @@
+// ! WARNING: Outdated code. Please update to the newest 'webrtc-ip' npm module for use with Next.js
+
 /*
 *   This file is the entire script combined in working order.
 *   Copyright 2021 © Joey Malvinni
@@ -139,7 +141,7 @@ function publicIPs(timer){
             // Setting the timer.
             setTimeout(() => {
                 // Checking if the IP array exists.
-                if(!IPs || IPs === []){
+                if(!IPs){
                     // Rejecting the error
                     reject('No IP addresses were found.')
                 } else {

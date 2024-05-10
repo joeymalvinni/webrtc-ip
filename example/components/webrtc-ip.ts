@@ -19,7 +19,6 @@ export async function getIPs(stun: string = "stun:stun.l.google.com:19302"): Pro
             ips.push(parsed.ip);
           }
         } else {
-          console.log('No more ICE candidates');
           resolve(ips);
         }
       };

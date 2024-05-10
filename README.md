@@ -27,10 +27,6 @@
 > This software is for educational purposes only. This software should not be used for illegal activity. The author is not responsible for its use.
 
 
-## Examples
-
-  The example (located at [`/example`](https://github.com/joeymalvinni/webrtc-ip/tree/main/example)) is being hosted on [Heroku](https://webrtc-ip.herokuapp.com/).
-  
 ## Authors
 
 The author of webrtc-ips is [Joey Malvinni](https://github.com/joeymalvinni)
