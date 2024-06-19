@@ -10,13 +10,10 @@ export async function getIP(stun: string = "stun:stun.l.google.com:19302"): Prom
   };
 
   const p = new RTCPeerConnection(config);
-  const ips: string[] = [];
 
-  // Return a promise that resolves when gathering of ICE candidates is complete
   return new Promise<string>((resolve, reject) => {
     p.onicecandidate = (event) => {
       if (event.candidate && event.candidate.candidate) {
-        // let parsed: IPH = minimal_parse(event.candidate.candidate);
         let split = event.candidate.candidate.split(" ");
 
         if (split[7] !== "host") {

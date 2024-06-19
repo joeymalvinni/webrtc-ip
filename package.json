@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/joeymalvinni/webrtc-ip#readme",
   "devDependencies": {
-    "puppeteer": "^22.8.0"
+    "next": "*",
+    "typescript": "*"
   }
 }
