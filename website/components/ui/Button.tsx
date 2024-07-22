@@ -22,7 +22,7 @@ const classes = {
         primary:
             'bg-primary hover:bg-primary_hovered text-white font-ibm tracking-tigher rounded-md',
         secondary:
-            'text-white bg-secondary hover:bg-secondary_hovered focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 hover:text-[#C3C3D7] font-ibm rounded-md',
+            'text-white bg-secondary hover:bg-secondary_hovered hover:text-[#C3C3D7] font-ibm rounded-md',
         danger:
             'bg-red-500 hover:bg-red-800 focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 text-white font-ibm',
     },

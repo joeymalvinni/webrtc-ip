@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "name": "webrtc-ip",
     "type": "commonjs",
     "main": "dist/webrtc-ip.js",
@@ -29,38 +28,8 @@
     },
     "devDependencies": {
         "next": "*",
+        "react-syntax-highlighter": "^15.5.0",
         "typescript": "^5.5.3",
         "webrtc-ip": "^4.0.4"
     }
-=======
-  "name": "webrtc-ip",
-  "version": "3.0.1",
-  "description": "💻 Simplified IP client using WebRTC.",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "node app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joeymalvinni/webrtc-ip.git"
-  },
-  "keywords": [
-    "webrtc",
-    "ipv4",
-    "ip-addresses",
-    "ip-request",
-    "webrtc-ip",
-    "webrtc-ip-addresses"
-  ],
-  "author": "Joey Malvinni",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/joeymalvinni/webrtc-ip/issues"
-  },
-  "homepage": "https://github.com/joeymalvinni/webrtc-ip#readme",
-  "dependencies": {
-    "express": "*",
-    "path": "^0.12.7"
-  }
->>>>>>> main
 }
