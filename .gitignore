@@ -1,8 +1,1 @@
-# Dependency directories
 node_modules/
-
-# Optional npm cache directory
-.npm
-
-# Package Lock file
-package-lock.json
