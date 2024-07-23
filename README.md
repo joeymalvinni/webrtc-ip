@@ -23,9 +23,49 @@
 <br>
 
 
-> [!WARNING]
-> This software is for educational purposes only. This software should not be used for illegal activity. The author is not responsible for its use.
+## Installation
 
+The `webrtc-ip` package is available through [npm](https://www.npmjs.com/package/webrtc-ip):
+
+```bash
+npm install webrtc-ip
+```
+
+Alternatively, install using `bun`:
+``` bash
+bun install webrtc-ip
+```
+
+
+## Usage
+
+WebRTC-IP is intended to be used with Next.js. A minimal example is present in [website/example]:
+
+```ts
+import { useState, useEffect } from "react";
+import { getIP } from 'webrtc-ip';
+
+export default function Home() {
+    const [ip, setIp] = useState<string>("0.0.0.0");
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const ipAddress: string = await getIP();
+                setIp(ipAddress);
+            } catch (error) {
+                console.error("Failed to fetch IP address:", error);
+            }
+        })();
+    }, []);
+
+    return (
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+            <p>{ip}</p>
+        </main>
+    );
+}
+```
 
 ## Authors
 
