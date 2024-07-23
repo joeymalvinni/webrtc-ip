@@ -1,33 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { codeToHtml } from 'shiki';
-import { transformerNotationHighlight, transformerNotationDiff } from '@shikijs/transformers';
-import type { BundledLanguage, BundledTheme } from 'shiki';
+import React, { useState } from 'react';
 import CopyToClipboard from './CopyToClipboard';
 
 type Props = {
+    html: string;
     code: string;
-    lang?: BundledLanguage;
-    theme?: BundledTheme;
 };
 
-const Code: React.FC<Props> = ({ code, lang = 'javascript', theme = 'nord' }) => {
-    const [html, setHtml] = useState<string>(`<code>${code}</code>`);
+const Code: React.FC<Props> = ({ html, code }) => {
     const [isHovering, setIsHovered] = useState(false);
     const onMouseEnter = () => setIsHovered(true);
     const onMouseLeave = () => setIsHovered(false);
-
-    useEffect(() => {
-        const generateHtml = async () => {
-            const result = await codeToHtml(code, {
-                lang,
-                theme,
-                transformers: [transformerNotationHighlight(), transformerNotationDiff()],
-            });
-            setHtml(result);
-        };
-        generateHtml();
-    }, [code, lang, theme]);
-
     return (
         <div
             className="relative rounded-lg max-w-xl"

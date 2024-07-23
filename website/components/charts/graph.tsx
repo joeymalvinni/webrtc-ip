@@ -9,22 +9,11 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const chartData = [
-    { name: "WebRTC", time: 30 },
-    { name: "IPIFY", time: 120 },
-    { name: "IPRegistry", time: 230 },
-    { name: "JSONIP", time: 150 },
-]
-
 const chartConfig = {
     time: {
         label: "Time (ms)",
         color: "#504EC2",
     },
-    // mobile: {
-    //     label: "Mobile",
-    //     color: "#60a5fa",
-    // },
 } satisfies ChartConfig
 
 interface ComponentProps {
