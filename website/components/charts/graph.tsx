@@ -21,6 +21,10 @@ interface ComponentProps {
 }
 
 export default function Component({ data }: ComponentProps) {
+    if (data.length === 0) {
+        return <div className="dark w-full h-[220px]" aria-hidden />
+    }
+
     return (
         <ChartContainer config={chartConfig} className="dark w-full h-[220px]">
             <BarChart
@@ -52,7 +56,7 @@ export default function Component({ data }: ComponentProps) {
                         dataKey="time"
                         position="top"
                         offset={8}
-                        formatter={(v: number) => `${v.toFixed(0)}ms`}
+                        formatter={(value) => typeof value === "number" ? `${value.toFixed(0)}ms` : ""}
                         style={{ fill: "rgba(232,232,227,0.55)", fontSize: 10, fontFamily: "var(--font-ibm)", letterSpacing: "0.06em" }}
                     />
                 </Bar>

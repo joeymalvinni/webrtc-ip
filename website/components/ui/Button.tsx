@@ -71,6 +71,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     )
 );
 
+Button.displayName = 'Button';
+
 Button.propTypes = {
     children: PropTypes.node.isRequired,
     type: PropTypes.oneOf(['button', 'submit', 'reset']),
