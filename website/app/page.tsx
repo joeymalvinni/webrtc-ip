@@ -135,7 +135,7 @@ const Home: React.FC = () => {
                 <nav className="hidden md:flex items-center gap-8 font-ibm text-[12px] tracking-[0.18em] uppercase text-bone/55">
                     <a href="#benchmark" className="hover:text-bone transition">Benchmark</a>
                     <a href="#install" className="hover:text-bone transition">Install</a>
-                    <a href="https://github.com/joeyism/webrtc-ip" target="_blank" rel="noreferrer" className="hover:text-bone transition">GitHub</a>
+                    <a href="https://github.com/joeymalvinni/webrtc-ip" target="_blank" rel="noreferrer" className="hover:text-bone transition">GitHub</a>
                     <a href="https://www.npmjs.com/package/webrtc-ip" target="_blank" rel="noreferrer"
                        className="px-3 py-2 border border-bone/20 rounded-full text-bone hover:bg-bone/5 transition">
                         npm ↗
@@ -289,7 +289,7 @@ const Home: React.FC = () => {
             <footer className="relative z-10 mx-auto max-w-7xl px-6 md:px-10 py-10 border-t border-bone/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 font-ibm text-[11px] tracking-[0.18em] uppercase text-bone/40">
                 <div>© {new Date().getFullYear()} · joey malvinni</div>
                 <div className="flex items-center gap-6">
-                    <a href="https://github.com/joeyism/webrtc-ip" target="_blank" rel="noreferrer" className="hover:text-bone transition">Github</a>
+                    <a href="https://github.com/joeymalvinni/webrtc-ip" target="_blank" rel="noreferrer" className="hover:text-bone transition">Github</a>
                     <a href="https://www.npmjs.com/package/webrtc-ip" target="_blank" rel="noreferrer" className="hover:text-bone transition">npm</a>
                 </div>
             </footer>
