@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Public IP method benchmark</title>
+  <style>
+    body { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; margin: 2rem; }
+    label { display: block; margin: 0.5rem 0; }
+    input { font: inherit; width: 9rem; }
+    button { font: inherit; padding: 0.4rem 0.7rem; }
+    table { border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
+    th, td { border: 1px solid #ccc; padding: 0.35rem 0.6rem; text-align: right; white-space: nowrap; }
+    th:first-child, td:first-child, th:last-child, td:last-child { text-align: left; }
+    caption { caption-side: bottom; text-align: left; margin-top: 0.75rem; max-width: 90rem; line-height: 1.4; }
+    #status { margin-top: 1rem; }
+    .error { color: #b00020; }
+    .pending { color: #666; }
+  </style>
+</head>
+<body>
+  <h1>Public IP method benchmark</h1>
+
+  <label>STUN URL <input id="stun" value="stun:stun.l.google.com:19302" style="width: 24rem" /></label>
+  <label>Fetch iterations <input id="iterations" type="number" min="1" value="10" /></label>
+  <label>Cold WebRTC iterations <input id="coldIterations" type="number" min="0" value="3" /></label>
+  <label>Timeout ms <input id="timeout" type="number" min="100" value="5000" /></label>
+  <button id="run">Run comparison</button>
+  <div id="status">Idle</div>
+  <div id="results"></div>
+
+  <script>window.exports = {};</script>
+  <script src="../dist/webrtc-ip.js"></script>
+  <script>
+  (() => {
+    const webrtcGetIP = window.exports.getIP;
+    const sourceUrl = new URL("../dist/webrtc-ip.js", location.href).href;
+    const COLUMNS = ["method", "state", "ok", "errors", "mean_ms", "min_ms", "p50_ms", "p95_ms", "p99_ms", "max_ms", "ip"];
+
+    function percentile(sorted, p) {
+      const index = (sorted.length - 1) * p;
+      const lower = Math.floor(index);
+      const upper = Math.ceil(index);
+      if (lower === upper) return sorted[lower];
+      return sorted[lower] + (sorted[upper] - sorted[lower]) * (index - lower);
+    }
+
+    function summarize(method, samples, ips, errors, state = "done") {
+      const sorted = [...samples].sort((a, b) => a - b);
+      const total = samples.reduce((sum, value) => sum + value, 0);
+      const toMs = (ms) => Number.isFinite(ms) ? ms.toFixed(3) : "";
+      const uniqueIps = [...new Set(ips.filter(Boolean))].join(", ");
+
+      return {
+        method,
+        state,
+        ok: samples.length,
+        errors,
+        mean_ms: samples.length ? toMs(total / samples.length) : "",
+        min_ms: samples.length ? toMs(sorted[0]) : "",
+        p50_ms: samples.length ? toMs(percentile(sorted, 0.50)) : "",
+        p95_ms: samples.length ? toMs(percentile(sorted, 0.95)) : "",
+        p99_ms: samples.length ? toMs(percentile(sorted, 0.99)) : "",
+        max_ms: samples.length ? toMs(sorted[sorted.length - 1]) : "",
+        ip: uniqueIps,
+      };
+    }
+
+    async function time(fn) {
+      const start = performance.now();
+      const result = await fn();
+      return { duration: performance.now() - start, result };
+    }
+
+    async function withTimeout(fn, timeoutMs) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        return await fn(controller.signal);
+      } finally {
+        clearTimeout(timeout);
+      }
+    }
+
+    async function fetchText(url, signal) {
+      const response = await fetch(url, { cache: "no-store", signal });
+      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+      return (await response.text()).trim();
+    }
+
+    async function fetchJson(url, pick, signal) {
+      const response = await fetch(url, { cache: "no-store", signal });
+      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+      return pick(await response.json());
+    }
+
+    async function fetchCloudflareTrace(signal) {
+      const text = await fetchText("https://www.cloudflare.com/cdn-cgi/trace", signal);
+      const line = text.split("\n").find((value) => value.startsWith("ip="));
+      return line ? line.slice(3) : "";
+    }
+
+    async function freshWebrtcGetIP(stun) {
+      const iframe = document.createElement("iframe");
+      iframe.hidden = true;
+      document.body.appendChild(iframe);
+
+      try {
+        const doc = iframe.contentDocument;
+        iframe.contentWindow.exports = {};
+        const script = doc.createElement("script");
+        script.src = sourceUrl + "?cacheBust=" + crypto.randomUUID();
+        doc.body.appendChild(script);
+        await new Promise((resolve, reject) => {
+          script.onload = resolve;
+          script.onerror = reject;
+        });
+
+        return await iframe.contentWindow.exports.getIP(stun);
+      } finally {
+        iframe.remove();
+      }
+    }
+
+    function getMethods(stun) {
+      return [
+        {
+          name: "ipify JSON IPv4",
+          kind: "normal",
+          run: (signal) => fetchJson("https://api.ipify.org?format=json", (json) => json.ip, signal),
+        },
+        {
+          name: "ipify JSON IPv4/IPv6",
+          kind: "normal",
+          run: (signal) => fetchJson("https://api64.ipify.org?format=json", (json) => json.ip, signal),
+        },
+        {
+          name: "icanhazip text",
+          kind: "normal",
+          run: (signal) => fetchText("https://icanhazip.com", signal),
+        },
+        {
+          name: "ident.me text",
+          kind: "normal",
+          run: (signal) => fetchText("https://ident.me", signal),
+        },
+        {
+          name: "ifconfig.co JSON",
+          kind: "normal",
+          run: (signal) => fetchJson("https://ifconfig.co/json", (json) => json.ip, signal),
+        },
+        {
+          name: "Cloudflare trace",
+          kind: "normal",
+          run: fetchCloudflareTrace,
+        },
+        {
+          name: "WebRTC STUN cold",
+          kind: "cold",
+          run: () => freshWebrtcGetIP(stun),
+        },
+      ];
+    }
+
+    async function benchmarkMethod(method, iterations, timeoutMs, status, onProgress) {
+      const samples = [];
+      const ips = [];
+      let errors = 0;
+
+      if (iterations === 0) {
+        return summarize(method.name, samples, ips, errors, "skipped");
+      }
+
+      if (method.setup) {
+        status.textContent = `Warming ${method.name}...`;
+        await withTimeout(() => method.setup(), timeoutMs);
+      }
+
+      for (let i = 0; i < iterations; i++) {
+        status.textContent = `${method.name}: ${i + 1}/${iterations}`;
+        try {
+          const sample = await time(() => withTimeout((signal) => method.run(signal), timeoutMs));
+          samples.push(sample.duration);
+          ips.push(sample.result);
+        } catch (error) {
+          console.warn(method.name, error);
+          errors++;
+        }
+        onProgress(summarize(method.name, samples, ips, errors, `running ${i + 1}/${iterations}`));
+      }
+
+      return summarize(method.name, samples, ips, errors);
+    }
+
+    function render(rows) {
+      document.getElementById("results").innerHTML = `
+        <table>
+          <thead><tr>${COLUMNS.map((column) => `<th>${column}</th>`).join("")}</tr></thead>
+          <tbody>${rows.map((row) => `<tr class="${row.state === "pending" ? "pending" : ""}">${COLUMNS.map((column) => `<td>${row[column] ?? ""}</td>`).join("")}</tr>`).join("")}</tbody>
+          <caption>
+            Lower is faster. Times are milliseconds. The table appears immediately with every requested method, then updates row-by-row. Cold WebRTC creates a fresh hidden iframe per iteration and can be much slower; use the Cold WebRTC iterations field to control it. Fetch methods include DNS, TLS, server latency, CORS, and remote service time.
+          </caption>
+        </table>`;
+    }
+
+    document.getElementById("run").addEventListener("click", async () => {
+      const run = document.getElementById("run");
+      const status = document.getElementById("status");
+      const stun = document.getElementById("stun").value;
+      const iterations = Number(document.getElementById("iterations").value);
+      const coldIterations = Number(document.getElementById("coldIterations").value);
+      const timeoutMs = Number(document.getElementById("timeout").value);
+      const methods = getMethods(stun);
+      const rows = methods.map((method) => summarize(method.name, [], [], 0, "pending"));
+
+      function updateRow(row) {
+        const index = rows.findIndex((candidate) => candidate.method === row.method);
+        rows[index] = row;
+        render(rows);
+      }
+
+      run.disabled = true;
+      render(rows);
+
+      try {
+        for (const method of methods) {
+          const methodIterations = method.kind === "cold" ? coldIterations : iterations;
+          updateRow(summarize(method.name, [], [], 0, "running"));
+          updateRow(await benchmarkMethod(method, methodIterations, timeoutMs, status, updateRow));
+        }
+
+        const sortedRows = [...rows].sort((a, b) => Number(a.mean_ms || Infinity) - Number(b.mean_ms || Infinity));
+        console.table(sortedRows);
+        render(sortedRows);
+        status.textContent = `Done. crossOriginIsolated=${window.crossOriginIsolated}; timer quantum ~= ${estimateTimerQuantumMs()} ms`;
+      } catch (error) {
+        console.error(error);
+        status.innerHTML = `<span class="error">${String(error && error.message || error)}</span>`;
+      } finally {
+        run.disabled = false;
+      }
+    });
+
+    function estimateTimerQuantumMs() {
+      let previous = performance.now();
+      let best = Infinity;
+      for (let i = 0; i < 10000; i++) {
+        const current = performance.now();
+        const diff = current - previous;
+        if (diff > 0 && diff < best) best = diff;
+        previous = current;
+      }
+      return Number.isFinite(best) ? best.toFixed(6) : "unknown";
+    }
+  })();
+  </script>
+</body>
+</html>

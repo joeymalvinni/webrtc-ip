@@ -12,7 +12,9 @@
         "url": "https://github.com/joeymalvinni/webrtc-ip/issues"
     },
     "scripts": {
-        "start": "cd website && npm run dev"
+        "start": "cd website && npm run dev",
+        "benchmark": "node scripts/benchmark-mock-browser.js",
+        "benchmark:browser": "node scripts/serve-benchmark.js"
     },
     "keywords": [
         "webrtc",
