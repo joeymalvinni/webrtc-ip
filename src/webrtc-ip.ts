@@ -10,6 +10,16 @@ const DEFAULT_TIMEOUT = 3000;
 
 const cachedIPPromises = new Map<string, Promise<string>>();
 
+function getPeerConnection(): typeof RTCPeerConnection | undefined {
+    if (typeof window === "undefined") {
+        return undefined;
+    }
+
+    return window.RTCPeerConnection ||
+        (window as typeof window & { webkitRTCPeerConnection?: typeof RTCPeerConnection }).webkitRTCPeerConnection ||
+        (window as typeof window & { mozRTCPeerConnection?: typeof RTCPeerConnection }).mozRTCPeerConnection;
+}
+
 function normalizeOptions(stunOrOptions?: string | string[] | GetIPOptions): Required<GetIPOptions> {
     if (typeof stunOrOptions === "string" || Array.isArray(stunOrOptions)) {
         return {
@@ -43,19 +53,19 @@ function readCandidate(candidate: string): { ip: string; type: string } | null {
 }
 
 function createIPPromise(options: Required<GetIPOptions>): Promise<string> {
-    if (typeof window === 'undefined') {
+    const PeerConnection = getPeerConnection();
+    if (!PeerConnection) {
         return Promise.resolve("");
     }
 
     const iceServers = Array.isArray(options.stun) && options.stun.length === 0
         ? []
         : [{ urls: options.stun }];
-    const config = {
+
+    const connection = new PeerConnection({
         iceCandidatePoolSize: 1,
         iceServers
-    };
-
-    const p = new RTCPeerConnection(config);
+    });
 
     return new Promise<string>((resolve, reject) => {
         let settled = false;
@@ -72,9 +82,9 @@ function createIPPromise(options: Required<GetIPOptions>): Promise<string> {
                 clearTimeout(timer);
             }
 
-            p.onicecandidate = null;
-            p.onicegatheringstatechange = null;
-            p.close();
+            connection.onicecandidate = null;
+            connection.onicegatheringstatechange = null;
+            connection.close();
             callback();
         };
 
@@ -82,7 +92,7 @@ function createIPPromise(options: Required<GetIPOptions>): Promise<string> {
             finish(() => reject(new Error("Timed out while gathering WebRTC IP candidates")));
         }, options.timeout);
 
-        p.onicecandidate = (event) => {
+        connection.onicecandidate = (event) => {
             if (event.candidate && event.candidate.candidate) {
                 const candidate = readCandidate(event.candidate.candidate);
 
@@ -92,15 +102,15 @@ function createIPPromise(options: Required<GetIPOptions>): Promise<string> {
             }
         };
 
-        p.onicegatheringstatechange = () => {
-            if (p.iceGatheringState === "complete") {
+        connection.onicegatheringstatechange = () => {
+            if (connection.iceGatheringState === "complete") {
                 finish(() => reject(new Error("No public WebRTC IP candidate found")));
             }
         };
 
-        p.createDataChannel('ip channel');
-        p.createOffer()
-            .then((offer) => p.setLocalDescription(offer))
+        connection.createDataChannel("");
+        connection.createOffer()
+            .then((offer) => connection.setLocalDescription(offer))
             .catch((error) => finish(() => reject(error)));
     });
 }
