@@ -1,13 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.WebRTCIPError = void 0;
-exports.clearIPCache = clearIPCache;
-exports.getIP = getIP;
-exports.getIPInfo = getIPInfo;
-exports.getIPOrNull = getIPOrNull;
-exports.isSupported = isSupported;
-exports.isWebRTCIPError = isWebRTCIPError;
-exports.prefetchIP = prefetchIP;
 const DEFAULT_STUN = "stun:stun.l.google.com:19302";
 const DEFAULT_TIMEOUT = 3000;
 const DEFAULT_CACHE_TTL = Number.POSITIVE_INFINITY;
@@ -30,7 +20,6 @@ class WebRTCIPError extends Error {
         Object.setPrototypeOf(this, WebRTCIPError.prototype);
     }
 }
-exports.WebRTCIPError = WebRTCIPError;
 function isWebRTCIPError(error) {
     if (error instanceof WebRTCIPError) {
         return true;
@@ -326,3 +315,4 @@ function prefetchIP(stunOrOptions) {
 function clearIPCache() {
     cachedIPInfoPromises.clear();
 }
+export { WebRTCIPError, clearIPCache, getIP, getIPInfo, getIPOrNull, isSupported, isWebRTCIPError, prefetchIP };

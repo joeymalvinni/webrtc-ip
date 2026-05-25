@@ -2,16 +2,37 @@
     "name": "webrtc-ip",
     "type": "commonjs",
     "main": "dist/webrtc-ip.js",
+    "module": "dist/webrtc-ip.mjs",
     "types": "dist/webrtc-ip.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/webrtc-ip.d.ts",
+            "import": "./dist/webrtc-ip.mjs",
+            "require": "./dist/webrtc-ip.js"
+        }
+    },
+    "sideEffects": false,
+    "files": [
+        "dist",
+        "src",
+        "scripts/build.js",
+        "tsconfig.json",
+        "tsconfig.esm.json",
+        "README.md",
+        "LICENSE"
+    ],
     "author": "Joey Malvinni",
     "license": "Apache-2.0",
-    "version": "4.0.5",
+    "version": "5.0.0",
     "homepage": "https://github.com/joeymalvinni/webrtc-ip#readme",
     "description": "💻 Fast IP client using WebRTC.",
     "bugs": {
         "url": "https://github.com/joeymalvinni/webrtc-ip/issues"
     },
     "scripts": {
+        "build": "node scripts/build.js",
+        "test": "npm run build && node --test tests/*.test.js",
+        "prepack": "npm run build",
         "start": "cd website && npm run dev",
         "benchmark": "node scripts/benchmark-mock-browser.js",
         "benchmark:browser": "node scripts/serve-benchmark.js"
@@ -29,9 +50,6 @@
         "url": "git+https://github.com/joeymalvinni/webrtc-ip.git"
     },
     "devDependencies": {
-        "next": "*",
-        "react-syntax-highlighter": "^15.5.0",
-        "typescript": "^5.5.3",
-        "webrtc-ip": "^4.0.4"
+        "typescript": "^5.5.3"
     }
 }
