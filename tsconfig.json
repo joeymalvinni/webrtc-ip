@@ -9,6 +9,9 @@
         "strict": true,
         "skipLibCheck": true
     },
+    "include": [
+        "src"
+    ],
     "exclude": [
         "website",
         "example",

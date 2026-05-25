@@ -43,7 +43,9 @@ WebRTC-IP is intended to be used with Next.js. A minimal example is present in [
 
 ```ts
 import { useState, useEffect } from "react";
-import { getIP } from 'webrtc-ip';
+import { getIP, prefetchIP } from 'webrtc-ip';
+
+prefetchIP();
 
 export default function Home() {
     const [ip, setIp] = useState<string>("0.0.0.0");
@@ -66,6 +68,20 @@ export default function Home() {
     );
 }
 ```
+
+For the fastest public IP lookup in the browser, start the WebRTC/STUN probe as early as possible with `prefetchIP()` and read the cached result later with `getIP()`. The first call still has to wait for ICE gathering, but repeated calls reuse the same in-flight or completed promise.
+
+```ts
+const ip = await getIP({
+    stun: [
+        "stun:stun.l.google.com:19302",
+        "stun:stun1.l.google.com:19302"
+    ],
+    timeout: 3000
+});
+```
+
+If you only need a local network candidate, `getIP({ stun: [], includeLocal: true })` skips STUN and can resolve earlier. Modern browsers often mask local addresses with mDNS names, so the default waits for a public server-reflexive candidate.
 
 ## Authors
 
