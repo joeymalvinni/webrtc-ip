@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
-import { Poppins, IBM_Plex_Mono } from "next/font/google";
+import { Fraunces, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
 import localFont from 'next/font/local';
 import "./globals.css";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ['400', '700'], variable: "--font-poppins" });
-const ibm = IBM_Plex_Mono({ subsets: ["latin"], weight: ['400', '700'], variable: "--font-ibm" });
+const fraunces = Fraunces({
+    subsets: ["latin"],
+    weight: ['300', '400', '500', '600', '700', '900'],
+    variable: "--font-fraunces",
+});
+const instrument = Instrument_Serif({ subsets: ["latin"], weight: ['400'], style: ['normal', 'italic'], variable: "--font-instrument" });
+const ibm = IBM_Plex_Mono({ subsets: ["latin"], weight: ['300', '400', '500', '700'], variable: "--font-ibm" });
 const hack = localFont({
     src: [
         {
@@ -33,7 +38,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${poppins.variable} ${hack.variable} ${ibm.variable} font-poppins`}>{children}</body>
+            <body className={`${fraunces.variable} ${instrument.variable} ${hack.variable} ${ibm.variable} font-mono bg-[#0A0A0B] text-[#E8E8E3] antialiased`}>{children}</body>
         </html>
     );
 }
