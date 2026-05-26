@@ -13,17 +13,13 @@
     },
     "sideEffects": false,
     "files": [
-        "dist",
-        "src",
-        "scripts/build.js",
-        "tsconfig.json",
-        "tsconfig.esm.json",
-        "README.md",
-        "LICENSE"
+        "dist/webrtc-ip.js",
+        "dist/webrtc-ip.mjs",
+        "dist/webrtc-ip.d.ts"
     ],
     "author": "Joey Malvinni",
     "license": "Apache-2.0",
-    "version": "5.0.0",
+    "version": "5.0.1",
     "homepage": "https://joeymalvinni.github.io/webrtc-ip/",
     "description": "🌐 Enhanced IP address querying with WebRTC ",
     "bugs": {
@@ -50,6 +46,7 @@
         "url": "git+https://github.com/joeymalvinni/webrtc-ip.git"
     },
     "devDependencies": {
+        "terser": "^5.48.0",
         "typescript": "^5.5.3"
     }
 }
