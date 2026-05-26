@@ -180,9 +180,8 @@ const Home: React.FC = () => {
                         value={webrtcMs ? `${webrtcMs.toFixed(1)} ms` : "—"}
                     />
                     <Stat
-                        label="Your public IP"
-                        value={ip || "resolving…"}
-                        mono
+                        label="Package size"
+                        value="9.5 kB"
                     />
                     <Stat
                         label="Dependencies"
