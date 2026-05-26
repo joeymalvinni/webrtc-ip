@@ -24,8 +24,8 @@
     "author": "Joey Malvinni",
     "license": "Apache-2.0",
     "version": "5.0.0",
-    "homepage": "https://github.com/joeymalvinni/webrtc-ip#readme",
-    "description": "💻 Fast IP client using WebRTC.",
+    "homepage": "https://joeymalvinni.github.io/webrtc-ip/",
+    "description": "🌐 Enhanced IP address querying with WebRTC ",
     "bugs": {
         "url": "https://github.com/joeymalvinni/webrtc-ip/issues"
     },
